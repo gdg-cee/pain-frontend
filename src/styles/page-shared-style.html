@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+
+<dom-module id="page-shared-style">
+    <template>
+        <style is="custom-style">
+            :host {
+                @apply(--layout-vertical);
+                @apply(--layout-fit);
+                --container-max-width: 900px;
+                overflow: hidden;
+                background-color: #eaeaea;
+            }
+
+            .container {
+                @apply(--layout-vertical);
+                width: 70%;
+                display: block;
+                overflow-y: auto;
+                max-width: var(--container-max-width);
+                margin: 0 auto;
+                padding: 16px 0;
+            }
+
+            .container .block {
+                @apply(--shadow-elevation-2dp);
+                background-color: #fafafa;
+                margin: 16px 0;
+                padding: 16px 32px;
+            }
+
+            .container .block h2 {
+                font-size: 24px;
+                margin: 12px 0;
+            }
+
+            .container .block h3 {
+                font-size: 18px;
+                margin: 10px 0;
+            }
+
+            .container .block.columns {
+                @apply(--layout-horizontal);
+            }
+
+            .container .block.columns .column {
+                @apply(--layout-flex);
+                @apply(--layout-vertical);
+            }
+
+        </style>
+    </template>
+</dom-module>

@@ -1,0 +1,27 @@
+<dom-module id="shared-styles">
+    <template>
+        <style>
+            :root {
+                --app-primary-color: #607D8B;
+                --app-primary-color-dark: #455A64;
+                --app-secondary-color: black;
+                --app-accent-color: #009688;
+
+                --primary-color: var(--app-primary-color);
+                --accent-color: var(--app-accent-color);
+
+                --list-divider-color: #ececec;
+                --list-divider-light-color: #f2f2f2;
+
+                --text-not-selectable: {
+                    -webkit-touch-callout: none; /* iOS Safari */
+                    -webkit-user-select: none; /* Chrome/Safari/Opera */
+                    -khtml-user-select: none; /* Konqueror */
+                    -moz-user-select: none; /* Firefox */
+                    -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none;
+                };
+            }
+        </style>
+    </template>
+</dom-module>

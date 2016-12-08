@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+
+<link rel="import" href="../behaviors/app-behavior.html">
+
+<dom-module id="page-header">
+    <template>
+        <style>
+            :host {
+                @apply(--layout-horizontal);
+                @apply(--layout-self-stretch);
+                width: 100%;
+            }
+
+            paper-toolbar {
+                @apply(--layout-flex);
+                @apply(--shadow-elevation-3dp);
+            }
+
+            paper-toolbar .title {
+                @apply(--layout-flex);
+            }
+
+            paper-toolbar paper-button {
+                background-color: whitesmoke;
+                color: #3a3a3a
+            }
+
+        </style>
+
+        <paper-toolbar>
+            <span class="title">[[app.page]]</span>
+            <paper-button raised>logout</paper-button>
+        </paper-toolbar>
+    </template>
+    <script>
+      (function () {
+        'use strict'
+
+        class PageHeader {
+
+          get behaviors () {
+            return PAIN.behaviors.get([
+              PAIN.AppBehavior
+            ])
+          }
+
+          beforeRegister () {
+            this.is = 'page-header'
+          }
+
+        }
+        Polymer(PageHeader)
+      })()
+    </script>
+</dom-module>

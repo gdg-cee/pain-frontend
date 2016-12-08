@@ -1,0 +1,29 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="page-events-directory">
+    <template>
+        <style>
+        </style>
+
+    </template>
+    <script>
+      (function () {
+        'use strict'
+
+        /**
+         *
+         */
+        class PageEventsDirectory {
+
+          get behaviors () {
+            return PAIN.behaviors.get([])
+          }
+
+          beforeRegister () {
+            this.is = 'page-events-directory'
+          }
+        }
+        Polymer(PageEventsDirectory)
+      })()
+    </script>
+</dom-module>

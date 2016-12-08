@@ -1,0 +1,40 @@
+{
+  "name": "gdg-pain-frontend",
+  "version": "1.0.0",
+  "description": "https://gdgpain.firebaseapp.com/",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "connect-modrewrite": "^0.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gdg-cee",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=4.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "browser-sync": "^2.14.0",
+    "del": "^2.2.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-filter": "^4.0.0",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-if": "^2.0.1",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-minify-inline": "^0.2.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-template": "^4.0.0",
+    "gulp-uglify": "^2.0.0",
+    "merge-stream": "^1.0.0",
+    "plylog": "^0.4.0",
+    "polymer-build": "^0.4.1",
+    "yargs": "^5.0.0"
+  }
+}

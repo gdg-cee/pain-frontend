@@ -1,0 +1,73 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+
+
+<dom-module id="dialog-styles">
+
+    <template>
+
+        <style include="paper-dialog-shared-styles">
+            :host {
+                display: block;
+                margin: 0;
+                min-height: 100%;
+                min-width: 100%;
+                --paper-scroll-header-panel-color: var(--default-primary-color);
+                --paper-icon-item: {
+                };
+                @apply(--layout-vertical);
+            }
+
+            paper-toolbar {
+                background-color: var(--app-primary-color);
+                color: #FFFFFF;
+                --paper-toolbar-title: {
+                    margin-left: 8px;
+                    overflow: visible;
+                };
+            }
+
+            .content {
+                @apply(--layout-flex);
+                @apply(--layout-vertical);
+                position: relative;
+                overflow-y: auto;
+            }
+
+            .button-bar {
+                @apply(--layout-horizontal);
+                @apply(--layout-end-justified);
+                padding: 8px;
+            }
+
+            .button-bar.divided {
+                border-top: 1px solid var(--list-divider-color);
+            }
+
+            .button-bar paper-button {
+                font-weight: bold;
+                color: var(--app-accent-color);
+            }
+
+            .button-bar paper-button[disabled] {
+                background-color: transparent;
+                color: var(--disabled-text-color);
+            }
+
+            .button-bar paper-button:not(:last-child) {
+                margin-right: 8px;
+            }
+
+            @media (min-width: 769px) {
+                :host {
+                    min-height: 600px;
+                    min-width: 800px;
+                }
+            }
+
+        </style>
+
+    </template>
+
+</dom-module>

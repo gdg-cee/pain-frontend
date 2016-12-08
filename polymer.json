@@ -1,0 +1,23 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/pain-app.html",
+  "fragments": [
+    "src/pages/auth-page.html",
+    "src/pages/organizer-page.html"
+  ],
+  "sourceGlobs": [
+    "scripts/**/*",
+    "!**/*.tmpl.js",
+    "src/**/*",
+    "!bower_components",
+    "!libs"
+  ],
+  "includeDependencies": [
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "bower_components/redux/index.js",
+    "images/**/*",
+    "data/**/*",
+    "libs/**/*",
+    "styles/**/*"
+  ]
+}

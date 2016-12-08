@@ -1,0 +1,141 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-route/app-location.html">
+
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+
+<link rel="import" href="../bower_components/polymer-redux/polymer-redux.html">
+
+<link rel="import" href="./styles/shared-styles.html">
+
+<link rel="import" href="./icons/mdi.html">
+
+<link rel="import" href="./elements/app-custom-router.html">
+<link rel="import" href="./elements/toast-element.html">
+
+<dom-module id="pain-app">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                /* Disable text selection in general in the app */
+                -webkit-user-select: none;
+                -moz-user-select: -moz-none;
+                -ms-user-select: none;
+                user-select: none;
+                /* And set appropriate cursor */
+                cursor: default;
+
+                @apply(--layout-fullbleed);
+                @apply(--layout-vertical);
+            }
+
+            .pages-container {
+                @apply(--layout-vertical);
+                @apply(--layout-flex);
+            }
+
+            iron-pages {
+                @apply(--layout-vertical);
+                @apply(--layout-flex);
+            }
+        </style>
+
+        <app-location route="{{route}}" query-params="{{query}}"></app-location>
+        <app-custom-router route="[[route]]" app="[[app]]"></app-custom-router>
+
+        <firebase-app
+                name="PAIN"
+                api-key=""
+                auth-domain="gdgpain.firebaseapp.com"
+                database-url="https://gdgpain.firebaseio.com">
+        </firebase-app>
+
+        <firebase-auth
+                app-name="PAIN"
+                status-known="{{authStatusKnown}}"
+                user="{{authUser}}">
+        </firebase-auth>
+
+        <div class="pages-container">
+            <iron-pages role="main" selected="[[app.page]]" attr-for-selected="name">
+                <auth-page name="auth" app="[[app]]"></auth-page>
+                <organizer-page name="organizer" app="[[app]]"></organizer-page>
+            </iron-pages>
+        </div>
+
+        <toast-element id="toast"></toast-element>
+
+    </template>
+
+    <script>
+      (function () {
+        'use strict'
+
+        const ReduxBehavior = PolymerRedux(PAIN.Redux.Store)
+
+        /**
+         *
+         */
+        class AgnesAppComponent {
+
+          get behaviors () {
+            return PAIN.behaviors.get([
+              ReduxBehavior
+            ])
+          }
+
+          beforeRegister () {
+            this.is = 'pain-app'
+            this.properties = {
+
+              /**
+               * TODO
+               */
+              app: {
+                type: Object,
+                statePath: 'app'
+              },
+
+              /**
+               *
+               */
+              data: {
+                type: Object,
+                statePath: 'data'
+              }
+            }
+            this.observers = [
+              '_onAuthStatusChanged(authStatusKnown)',
+              '_onAuthUserChanged(authUser)'
+            ]
+          }
+
+          created () {
+            PAIN.Elements.Template = this
+          }
+
+          ready () {
+            this.importHref(this.resolveUrl('pages/auth-page.html'), null, null, true)
+          }
+
+          _onAuthStatusChanged (statusKnown) {
+            if (statusKnown) {
+              PAIN.Redux.dispatchUpdateAuthState('known')
+            }
+          }
+
+          _onAuthUserChanged (authUser) {
+            PAIN.Redux.dispatchUpdateAuthUser(authUser)
+          }
+
+        }
+        Polymer(AgnesAppComponent)
+      })()
+    </script>
+
+</dom-module>

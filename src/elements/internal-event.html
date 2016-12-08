@@ -1,0 +1,90 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="internal-event">
+    <template>
+        <style>
+            :host {
+                @apply(--layout-vertical);
+                @apply(--layout-self-stretch);
+                @apply(--layout-center);
+                padding: 16px;
+            }
+
+            h3 {
+                font-size: 26px;
+                margin: 0 0 16px 0;
+                padding: 0;
+            }
+
+            .actions-bar {
+                @apply(--layout-horizontal);
+            }
+
+            .actions-bar paper-button {
+                padding: 8px 8px;
+                border: 1px solid #eaeaea;
+                font-size: 14px;
+            }
+
+            .actions-bar paper-button[raised] {
+                border: 0;
+                background-color: var(--accent-color);
+                color: #fff;
+            }
+
+            .actions-bar paper-button iron-icon {
+                margin: 0 8px 0 0;
+                --iron-icon-width: 24px;
+                --iron-icon-height: 24px;
+            }
+        </style>
+
+        <h3 class="name">[[event.name]]</h3>
+
+        <span class="date-when"></span>
+
+        <div class="actions-bar">
+            <paper-button>
+                <iron-icon icon="mdi:account-multiple"></iron-icon>
+                Zobrazit dorazivší
+            </paper-button>
+            <paper-button raised>
+                Potvrdit účast
+            </paper-button>
+        </div>
+
+    </template>
+    <script>
+      (function () {
+        'use strict'
+
+        class InternalEventListItem {
+
+          get behaviors () {
+            return PAIN.behaviors.get([])
+          }
+
+          beforeRegister () {
+            this.is = 'internal-event'
+            this.properties = {
+              /**
+               *
+               */
+              event: {
+                type: Object
+              },
+
+              /**
+               *
+               */
+              occurrences: {
+                type: Array
+              }
+            }
+          }
+
+        }
+        Polymer(InternalEventListItem)
+      })()
+    </script>
+</dom-module>

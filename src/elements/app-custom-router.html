@@ -1,0 +1,181 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../behaviors/app-behavior.html">
+
+<dom-module id="app-custom-router">
+    <template>
+        <app-route
+                id="appRoute"
+                route="[[route]]"
+                pattern="/:page"
+                data="{{pageData}}"
+                tail="{{tail}}">
+        </app-route>
+    </template>
+    <script>
+      (function () {
+        'use strict'
+
+        class AppCustomRouter {
+
+          get behaviors () {
+            return PAIN.behaviors.get([
+              PAIN.AppBehavior
+            ])
+          }
+
+          beforeRegister () {
+            this.is = 'app-custom-router'
+            this.properties = {
+
+              /**
+               * Top-level route object
+               */
+              route: {
+                type: Object
+              },
+
+              /**
+               * The default page to go if invalid URL
+               */
+              fallbackPage: {
+                type: String,
+                value: 'organizer'
+              },
+
+              /**
+               * Page the user came originally to before being redirected to auth screen
+               */
+              originPage: {
+                type: String,
+                value: null
+              },
+
+              /**
+               * All pages present on the page
+               */
+              availablePages: {
+                type: Object,
+                value: {
+                  'auth': {},
+                  'organizer': {},
+                  'internal-events': {},
+                  'events': {}
+                },
+                readOnly: true
+              }
+            }
+            this.observers = [
+              '_onRoutePathChanged(route.path, availablePages)',
+              '_onAuthChanged(app.auth)'
+            ]
+          }
+
+          /**
+           * Redirects to page with given ID by changing the URL, non-existing IDs are handled automatically
+           */
+          redirectToPage (pageId) {
+            console.log('redirectToPage', pageId)
+            // check if we aren't already on that page
+            if (this.app.page && pageId === this.app.page) {
+              return
+            }
+            // debounce the change so we don't call it many times (good for redirects)
+            this.debounce('redirect-page', function () {
+              window.location = '/' + pageId
+                /* todo: re-enable
+                 PAIN.Util.General.waitForAnalytics()
+                 .then(() => {
+                 PAIN.Analytics.trackPageView(this.route.path)
+                 })*/
+            }.bind(this), 300)
+          }
+
+          /**
+           * Handles auth state changes
+           */
+          _onAuthChanged () {
+            this._onRoutePathChanged()
+          }
+
+          /**
+           * Handles all changes to the URL route
+           */
+          _onRoutePathChanged () {
+            if (this.availablePages && this.route && this.app && this._validateAuthStateLocation()) {
+              if (this.$.appRoute.active) {
+                let pageId = this.$.appRoute.data.page
+                if (this.availablePages[ pageId ]) {
+                  if (!this.app.page || this.app.page === null || this.app.page !== pageId) {
+                    this._loadPage(pageId)
+                  }
+                } else {
+                  this.redirectToPage(this.fallbackPage)
+                }
+              }
+                /* else {
+                 console.log(this.route)
+                 // this.redirectToPage(this.fallbackPage)
+                 }*/
+            }
+          }
+
+          /**
+           * Validates that user is not in the app if not authorized, redirects him if necessary
+           */
+          _validateAuthStateLocation () {
+            console.log('_validateAuthStateLocation')
+            if (this.app.auth && this.app.auth.state !== 'initializing') {
+              if (this.app.auth.user === null && (!this.app.page || this.app.page !== 'auth')) {
+                if (this.originPage === null) {
+                  this.originPage = this.app.page
+                }
+
+                this.redirectToPage('auth')
+                return false
+              } else if (this.app.auth.user !== null && this.app.page === 'auth') {
+                if (this.originPage !== null) {
+                  this.redirectToPage(this.originPage)
+                  this.originPage = null
+                } else {
+                  this.redirectToPage(this.fallbackPage)
+                }
+                return false
+              }
+            }
+            return true
+          }
+
+          /**
+           * Loads target page
+           */
+          _loadPage (page) {
+            console.log('_loadPage', page)
+            // set the page to global object
+            PAIN.Redux.dispatchUpdatePage(page)
+            // load the page into the site
+            return this.loadPathResource(`/src/pages/${page}-page.html`)
+          }
+
+          /**
+           * Loads resource into page (importHref), path is relative to main component
+           */
+          loadPathResource (path) {
+            console.log('loadPathResource(' + path + ')')
+            return new Promise((resolve, reject) => {
+              PAIN.Elements.Template.importHref(
+                PAIN.Elements.Template.resolveUrl(path), () => {
+                  resolve()
+                }, (e) => {
+                  console.warn('loadPathResource(' + path + ') - failed', e)
+                  reject(e)
+                }, true)
+            })
+          }
+        }
+        Polymer(AppCustomRouter)
+      })()
+    </script>
+</dom-module>
