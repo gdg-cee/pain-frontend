@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+
+<link rel="import" href="../styles/page-shared-style.html">
+
+<link rel="import" href="../behaviors/app-behavior.html">
+<link rel="import" href="../behaviors/automatic-localize-behavior.html">
+
+<link rel="import" href="../elements/page-header.html">
+
+<dom-module id="home-page">
+    <template>
+        <style include="page-shared-style"></style>
+
+        <page-header app="[[app]]"></page-header>
+
+        <div class="container">
+            <div class="block">
+                <h2>Slack Account</h2>
+                <div>
+                    <span>ID: [[organizer.accounts.slack.userId]]</span>
+                </div>
+            </div>
+            <div class="block">
+                <h2>Meetup Account</h2>
+                <div>
+                    <span>...</span>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+      (function () {
+        'use strict'
+
+        class HomePage {
+
+          get behaviors () {
+            return PAIN.behaviors.get([
+              PAIN.AppBehavior,
+              PAIN.AppLocalizeBehavior
+            ])
+          }
+
+          beforeRegister () {
+            this.is = 'home-page'
+          }
+        }
+        Polymer(HomePage)
+      })()
+    </script>
+</dom-module>

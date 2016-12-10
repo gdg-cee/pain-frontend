@@ -34,7 +34,6 @@ const browserSync = require('browser-sync').create()
 
 const PolymerProject = polymer.PolymerProject
 const fork = polymer.forkStream
-const addServiceWorker = polymer.addServiceWorker
 
 let polymerJSON = require('./polymer.json')
 let project = new PolymerProject(polymerJSON)
@@ -162,25 +161,6 @@ gulp.task('polymer-build', [ 'config', 'clean' ], () => {
   let unbundledPhase = fork(allFiles)
   // write to the unbundled folder
     .pipe(gulp.dest('build/unbundled'))
-
-  /*let unbundledPostProcessing = waitFor(unbundledPhase).then(() => {
-    console.log('vulkanized unbundled, adding SW')
-    return addServiceWorker({
-      project: project,
-      buildRoot: 'build/unbundled',
-      swConfig: swConfig
-    })
-  })
-
-  let bundledPostProcessing = waitFor(bundledPhase).then(() => {
-    console.log('vulkanized bundled, adding SW')
-    return addServiceWorker({
-      project: project,
-      buildRoot: 'build/bundled',
-      swConfig: swConfig,
-      bundled: true
-    })
-  })*/
 
   return Promise.all([ waitFor(unbundledPhase), waitFor(bundledPhase) ])
 })

@@ -1,8 +1,5 @@
 (function () {
 
-  /**
-   * todo
-   */
   const Actions = {}
 
   Actions.App = {

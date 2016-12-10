@@ -48,12 +48,12 @@
     }
 
     static isSafari () {
-      var userAgent = navigator.userAgent
+      const userAgent = navigator.userAgent
       return (/Safari/gi).test(userAgent) && !(/Chrome/gi).test(userAgent)
     }
 
     static isIE () {
-      var userAgent = navigator.userAgent
+      const userAgent = navigator.userAgent
       return (/Trident/gi).test(userAgent)
     }
 
@@ -62,7 +62,7 @@
     }
 
     static isFF () {
-      var userAgent = navigator.userAgent
+      const userAgent = navigator.userAgent
       return (/Firefox/gi).test(userAgent)
     }
 
@@ -75,7 +75,7 @@
      * @return {Number} The Chrome version number.
      */
     static getChromeVersion () {
-      var raw = navigator.userAgent.match(/Chrome\/([0-9]+)\./)
+      const raw = navigator.userAgent.match(/Chrome\/([0-9]+)\./)
       return raw ? parseInt(raw[ 1 ], 10) : false
     }
 
@@ -84,12 +84,12 @@
      * @return {Number} The Firefox version number.
      */
     static getFirefoxVersion () {
-      var raw = navigator.userAgent.match(/Firefox\/([0-9]+)\./)
+      const raw = navigator.userAgent.match(/Firefox\/([0-9]+)\./)
       return raw ? parseInt(raw[ 1 ], 10) : false
     }
 
     static getUserLanguage () {
-      var lang = window.navigator.languages ? window.navigator.languages[ 0 ] : null
+      let lang = window.navigator.languages ? window.navigator.languages[ 0 ] : null
       lang = lang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage
       if (lang.indexOf('-') !== -1) {
         lang = lang.split('-')[ 0 ]
@@ -106,10 +106,6 @@
    * General utils methods
    */
   class Utils {
-
-    static waitForFirebase () {
-      return Utils.waitForGlobal('Firebase')
-    }
 
     static waitForAnalytics () {
       return Utils.waitForGlobal('Analytics')
@@ -138,9 +134,9 @@
      * @return {{promise: !Promise, resolve: function(), reject: function()}} A deferred object, allowing a Promise to be fulfilled at a later time.
      */
     static createDeferred () {
-      var resolveFn
-      var rejectFn
-      var promise = new Promise(function (resolve, reject) {
+      let resolveFn
+      let rejectFn
+      let promise = new Promise(function (resolve, reject) {
         resolveFn = resolve
         rejectFn = reject
       })
@@ -156,7 +152,7 @@
      * @param {string} color Color hex value.
      */
     static setMetaThemeColor (color) {
-      var metaTheme = document.documentElement.querySelector('meta[name="theme-color"]')
+      const metaTheme = document.documentElement.querySelector('meta[name="theme-color"]')
       if (metaTheme) {
         metaTheme.content = color
       }
@@ -167,7 +163,7 @@
      * https://events.google.com/io2016/about -> https://events.google.com/io2016/
      */
     static getStaticBaseURL () {
-      var url = location.href.replace(location.hash, '')
+      const url = location.href.replace(location.hash, '')
       return url.substring(0, url.lastIndexOf('/') + 1)
     }
 
@@ -180,7 +176,7 @@
       if (!window.location.search) {
         return undefined
       }
-      var m = new RegExp(param + '=([^&]*)').exec(window.location.search.substring(1))
+      const m = new RegExp(param + '=([^&]*)').exec(window.location.search.substring(1))
       if (!m) {
         return undefined
       }
@@ -197,10 +193,10 @@
       if (search[ 0 ] === '?') {
         search = search.substring(1)
       }
-      var parts = search.split('&')
-      var res = []
-      for (var i = 0; i < parts.length; i++) {
-        var pair = parts[ i ].split('=')
+      const parts = search.split('&')
+      const res = []
+      for (let i = 0; i < parts.length; i++) {
+        const pair = parts[ i ].split('=')
         if (pair[ 0 ] === name) {
           continue
         }
@@ -241,7 +237,7 @@
       // Google Analytics has a max size of 500 bytes for the event location field.
       // If we have an error with a stack trace, the trailing 500 bytes are likely to be the most
       // relevant, so grab those.
-      var location = (error && typeof error.stack === 'string') ? error.stack.slice(-500) : 'Unknown Location'
+      const location = (error && typeof error.stack === 'string') ? error.stack.slice(-500) : 'Unknown Location'
       Utils.waitForAnalytics()
         .then(() => {
           PAIN.Analytics.trackError(location, error)
@@ -255,11 +251,11 @@
      * @return {Element} The target element that was clicked/tapped.
      */
     static getEventSender (e, tagName) {
-      var path = Polymer.dom(e).path
+      const path = Polymer.dom(e).path
 
-      var target = null
-      for (var i = 0; i < path.length; ++i) {
-        var el = path[ i ]
+      let target = null
+      for (let i = 0; i < path.length; ++i) {
+        const el = path[ i ]
         if (el.localName === tagName) {
           target = el
           break
@@ -275,11 +271,11 @@
      */
     static getFPIfSupported () {
       if (window.chrome && window.chrome.loadTimes) {
-        var load = window.chrome.loadTimes()
-        var fp = (load.firstPaintTime - load.startLoadTime) * 1000
+        const load = window.chrome.loadTimes()
+        const fp = (load.firstPaintTime - load.startLoadTime) * 1000
         return Math.round(fp)
       } else if ('performance' in window) {
-        var navTiming = window.performance.timing
+        const navTiming = window.performance.timing
         // See http://msdn.microsoft.com/ff974719
         if (navTiming && navTiming.msFirstPaint && navTiming.navigationStart !== 0) {
           // See http://msdn.microsoft.com/ff974719
@@ -292,7 +288,7 @@
 
     static extend (obj1, obj2) {
       if (!obj1) obj1 = {}
-      for (var i in obj2) {
+      for (let i in obj2) {
         if (obj2.hasOwnProperty(i)) {
           obj1[ i ] = obj2[ i ]
         }

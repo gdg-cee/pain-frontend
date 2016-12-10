@@ -6,14 +6,14 @@
 
     <title>GDG PAIN</title>
 
-    <link rel="shortcut icon" sizes="32x32" href="/data/images/app-icon-32.png">
+    <!--<link rel="shortcut icon" sizes="32x32" href="/images/">-->
     <link rel="stylesheet" href="/styles/reset.css">
 
     <meta name="theme-color" content="#fff">
 
     <script src="https://www.google-analytics.com/analytics.js" async></script>
     <script src="/bower_components/redux/index.js"></script>
-    <script src="scripts/helper/config.js"></script>
+    <script src="/scripts/helper/config.js"></script>
     <script>
 
       window.PAIN = window.PAIN || {}
@@ -32,7 +32,7 @@
 
       // Creates the tracker.
       ga('create', {
-        trackingId: PAIN.Config.env === 'dev' ? 'UA-81405873-2' : 'UA-81405873-1',
+        trackingId: PAIN.Config.env === 'dev' ? 'TODO' : 'TODO',
         cookieDomain: 'auto',
         cookiePath: PAIN.Config.env !== 'dev' ? window.PREFIX || '/' : null,
         siteSpeedSampleRate: 10 // 10% of users.
@@ -52,34 +52,18 @@
       }
     </script>
 
-    <script src="scripts/helper/util.js"></script>
-    <script src="scripts/redux-store.js"></script>
-    <script src="scripts/elements.js"></script>
+    <script src="/scripts/helper/util.js"></script>
+    <script src="/scripts/redux-store.js"></script>
+    <script src="/scripts/elements.js"></script>
 
+    <link rel="stylesheet" href="/styles/general.css">
     <link rel="import" href="/src/pain-app.html">
-
-    <style>
-        html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Roboto', 'Noto', sans-serif;
-            line-height: 1.5;
-            min-height: 100vh;
-            background-color: #eee;
-        }
-    </style>
-
 </head>
 <body>
 
 <pain-app id="pain"></pain-app>
 
-<script src="scripts/analytics.js"></script>
+<script src="/scripts/analytics.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<script>
+  (function () {
+    'use strict'
+
+    /**
+     * Detects the language user configured his browser to show pages in
+     *
+     * @returns {string}
+     * @private
+     */
+    function _computeBrowserLang () {
+      let lang
+      if (navigator.languages) {
+        lang = navigator.languages[ 0 ]
+      } else {
+        lang = navigator.language
+      }
+      // finally use only first two characters and lowercase (we don't want to make difference between en-us / en-gb, ...)
+      return lang.substr(0, 2).toLowerCase()
+    }
+
+    let LocalizeBehaviorImpl = {
+
+      properties: {
+        defaultLanguage: {
+          type: String,
+          value: 'en'
+        },
+
+        supportedLanguages: {
+          type: Array,
+          value: () => {
+            return [ 'en' ]
+          }
+        },
+
+        lang: {
+          type: String,
+          value: () => {
+            return _computeBrowserLang()
+          }
+        }
+      },
+
+      observers: [
+        '_computeLanguage(defaultLanguage, lang)'
+      ],
+
+      _computeLanguage (defaultLang, lang) {
+        if (this.supportedLanguages.includes(lang)) {
+          this.language = lang
+        } else {
+          this.language = defaultLang
+        }
+        if (this.language) {
+          this._appLoadResources(this.language)
+        }
+      },
+
+      _appLoadResources (lang) {
+        this.loadResources(this.resolveUrl('/data/locale/' + lang + '/locale.json'))
+      }
+
+    }
+
+    PAIN.AppLocalizeBehavior = PAIN.AppLocalizeBehavior || [
+        Polymer.AppLocalizeBehavior,
+        LocalizeBehaviorImpl
+      ]
+  })();
+</script>

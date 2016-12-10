@@ -23,7 +23,7 @@ PAIN.Analytics = PAIN.Analytics ||
     'use strict'
 
     /**
-     * Analytics for the Settle Up: Web App.
+     * Analytics for the GDG PAIN website
      * @constructor
      */
     class Analytics {
@@ -174,12 +174,6 @@ PAIN.Analytics = PAIN.Analytics ||
         })
       }
 
-      trackUserArrivedFromNotification () {
-        console.log('trackUserArrivedFromNotification()')
-        this.updateTracker(this.customDimensions.CAME_FROM_NOTIFICATION, true)
-        this.trackEvent('fcm', 'sw-notification-click')
-      }
-
       setUserId (userId) {
         this.waitForTrackerReady().then(function () {
           ga('set', 'userId', userId)
@@ -323,8 +317,7 @@ PAIN.Analytics = PAIN.Analytics ||
       ONLINE: 'dimension2',
       SERVICE_WORKER_STATUS: 'dimension3',
       NOTIFICATION_PERMISSION: 'dimension4',
-      METRIC_VALUE: 'dimension5',
-      CAME_FROM_NOTIFICATION: 'dimension6'
+      METRIC_VALUE: 'dimension5'
     }
 
     // A list of dimensions that must be set before the first hit is sent.
