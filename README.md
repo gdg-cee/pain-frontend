@@ -3,13 +3,13 @@
 https://gdgpain.firebaseapp.com
 
 ### TODO
- [] Event creation page (design)
- [] Pushing new event to Firebase Database
- [] File uploads? (for integrations, cover images, ...) - Firebase Storage
- [] Integration with other services (Facebook, Meetup, ...) - creating connection and storing access tokens to our database
- [] Custom service worker (not automatically generated) - for faster load times
- [] Service connection page
- [] Listing user chapters
+ - [ ] Event creation page (design)
+ - [ ] Pushing new event to Firebase Database
+ - [ ] File uploads? (for integrations, cover images, ...) - Firebase Storage
+ - [ ] Integration with other services (Facebook, Meetup, ...) - creating connection and storing access tokens to our database
+ - [ ] Custom service worker (not automatically generated) - for faster load times
+ - [ ] Service connection page
+ - [ ] Listing user chapters
  
 ### Technology stack
  - Polymer (v1)
